@@ -12,9 +12,20 @@ class FindLongestWord(MRJob):
             if word:
                 yield (word[0], word)
         
-
-
-        pass
     def reducer(self, key, values):
         # reducer logic
-        pass
+        words = list(values)
+        maxLen = 0
+        res = set()
+
+        for word in words:
+            maxLen = max(len(word), maxLen)
+        
+    
+        for word in words:
+            if len(word) == maxLen:
+                res.add(word)
+        yield key, sorted(res)
+
+if __name__ == '__main__':
+    FindLongestWord.run()
